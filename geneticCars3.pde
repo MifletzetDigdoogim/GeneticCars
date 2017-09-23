@@ -30,6 +30,7 @@ void draw(){
         //    c.setIsDone(false);
         //}
         isOver = false;
+        print("Generation #"+genCounter + " --- ");
     }
 }
 

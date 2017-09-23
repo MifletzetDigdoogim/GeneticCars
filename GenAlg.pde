@@ -4,7 +4,7 @@ class GenAlg{
         ArrayList<Car> newPop;
         
         ArrayList<Car> genPop(ArrayList<Car> prev){
-           println("Creating new Generation");
+           //println("Creating new Generation");
            
            this.prev = prev;
            this.newPop = new ArrayList();
@@ -33,9 +33,9 @@ class GenAlg{
           }
           else{
               calcFitness();
-              println("FITNESS: \n");
+              //println("FITNESS: \n");
               for(int i=0; i<prev.size(); i++){
-                println(i+" : "+prev.get(i).getFitness());
+                //println(i+" : "+prev.get(i).getFitness());
               }
               mate();
           }
@@ -43,25 +43,31 @@ class GenAlg{
       }
       
       void calcFitness(){
-          println("Calculating fitness");
-          float sum = 0;
+          //println("Calculating fitness");
+          float sum = 0F;
+          float sumDist = 0F;
           for(Car c: this.prev){
-              c.setFitness(1/ (pow(c.loc.dist(Constants.target), 2)));
+              c.setFitness(1/ (pow(c.loc.dist(Constants.target), Constants.exponential)));
               sum += c.getFitness();
+              
+              sumDist += c.loc.dist(Constants.target);
           }
+          
+          println("Average Distance from Target : "+sumDist / Constants.popSize);
+          
           for(Car c: this.prev){
               c.setFitness(map(c.getFitness(), 0, sum, 0, 1));
           }
       }
       
       void mate(){
-          println("mate()");
+          //println("mate()");
           while(this.newPop.size() < Constants.popSize){
-              println("Adding car");
+              //println("Adding car");
               Car p1 = getFitParent();
-              print(" <3 ");
+              //print(" <3 ");
               Car p2 = getFitParent();
-              println();
+              //println();
               if(p1.equals(p2)){
                   continue;
               }
@@ -82,7 +88,7 @@ class GenAlg{
               int index = int(random(this.prev.size()));
               float num = random(0, 1);
               if(this.prev.get(index).getFitness() > num){
-                  print(index);
+                  //print(index);
                   return this.prev.get(index);
               }
           }
@@ -99,9 +105,9 @@ class GenAlg{
               path.add(p2.getPath().get(k).copy());
           }
           
-          println("parent1: "+p1.targets);
-          println("parent2: "+p2.targets);
-          println("child: "+new Car(Constants.start.copy(), path).targets);
+          //println("parent1: "+p1.targets);
+          //println("parent2: "+p2.targets);
+          //println("child: "+new Car(Constants.start.copy(), path).targets);
           return new Car(Constants.start.copy(), path);
       }
       
@@ -109,11 +115,11 @@ class GenAlg{
           
           for(int j=0; j<car.getPath().size(); j++){
               if(random(1) < 0.1){
-                  println("Mutating child");
+                  //println("Mutating child");
                   car.getPath().set(j, new PVector((int)random(-Constants.pathRange, Constants.pathRange), (int)random(-Constants.pathRange, Constants.pathRange)));
               }
           }
           car.targets = car.getTargets(Constants.start.copy());
-          println("After mutation: "+ car.targets);
+          //println("After mutation: "+ car.targets);
       }
 }

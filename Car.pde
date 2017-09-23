@@ -50,7 +50,7 @@ class Car extends Rectangle{
     
     ellipse(this.targets.get(this.index).x, this.targets.get(this.index).y, 5, 5);
     if(new Rectangle(this.targets.get(this.index), 5, 5).isOutOfBounds()){
-        println("OOB: "+this.targets.get(this.index));
+        //println("OOB: "+this.targets.get(this.index));
     }
 
     if(super.loc.dist(targets.get(this.index)) < 5){
