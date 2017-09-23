@@ -90,8 +90,8 @@ class GenAlg{
       
       Car crossOver(Car p1, Car p2){
           ArrayList<PVector> path = new ArrayList();
-          int midPoint = int(random(Constants.pathSize)); //Not really the middle - just the place in which the genes are split.
-          //int midPoint = Constants.pathSize / 2;
+          //int midPoint = int(random(Constants.pathSize)); //Not really the middle - just the place in which the genes are split.
+          int midPoint = round(Constants.pathSize / 2);
           for(int i=0; i<midPoint; i++){
               path.add(p1.getPath().get(i).copy());
           }
@@ -106,13 +106,14 @@ class GenAlg{
       }
       
       void mutate(Car car){
-      
-          for(PVector pv: car.getPath()){
+          
+          for(int j=0; j<car.getPath().size(); j++){
               if(random(1) < 0.1){
                   println("Mutating child");
-                  pv = new PVector((int)random(-Constants.pathRange, Constants.pathRange), (int)random(-Constants.pathRange, Constants.pathRange));
+                  car.getPath().set(j, new PVector((int)random(-Constants.pathRange, Constants.pathRange), (int)random(-Constants.pathRange, Constants.pathRange)));
               }
           }
           car.targets = car.getTargets(Constants.start.copy());
+          println("After mutation: "+ car.targets);
       }
 }
